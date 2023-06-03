@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <form method="get" action="{% url 'search' %}">
+        <input type="text" name="q" placeholder="Enter your KCET rank" value="{{ request.GET.q }}">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if results %}
+    <ul>
+        <p>You may get "{{results.name}}" college and "{{results.branch}}" branch</p>
+    </ul>
+    {% else %}
+        <p>Invalid Input.</p>
+    {% endif %}
+
+{% endblock %}
