@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    .message-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .alert {
+    color: red;
+    font-weight: bold;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      margin-top: 100px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+
+    .signup-link {
+      text-align: center;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <form action="{% url 'login' %}" method="POST">
+      {% csrf_token %}
+      <label for="email">Enter your email:</label>
+      <input type="text" id="email" name="email" required>
+      
+      <button type="submit">Login</button>
+    </form>
+    <div class="signup-link">
+      Don't have an account? <a href="signup.html">Sign up</a>
+    </div>
+  </div>
+  {% if messages %}
+  <div class="message-container">
+      {% for message in messages %}
+      <div  {% if message.tags %} class="alert alert-{{ message.tags }} " {% endif %}> {{ message }} </div>
+      {% endfor %}
+  </div>
+  <script>
+    setTimeout(function() {
+        var messages = document.querySelectorAll('.message-container .alert');
+        messages.forEach(function(message) {
+            message.style.display = 'none';
+        });
+    }, 2000); // Hide messages after 5 seconds (adjust the duration as needed)
+  </script>
+  {% endif %}
+</body>
+</html>

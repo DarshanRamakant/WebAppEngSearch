@@ -1,7 +1,28 @@
 from django.shortcuts import render
-
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from django.contrib import messages
+from django.shortcuts import redirect
 # Create your views here.
 from .models import SeatMetrixDb
+
+
+def is_valid_email(email):
+    try:
+        validate_email(email)
+        return True
+    except ValidationError:
+        return False
+    
+def loginPage(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        if is_valid_email(email):
+            return redirect('search')
+        else:
+            print("Invalid email")
+            messages.error(request, 'Invalid email entered.')
+    return render(request, 'login_page.html')
 
 def projects(request):
     return render(request,'projects/projects.html')
@@ -46,8 +67,11 @@ def search(request):
         else:
             return {}
     query = request.GET.get('q')
+    results = {}
     if query:
         results = getResults(query)
-    else:
-        results = {}
-    return render(request, 'search/search.html', {'results': results})
+
+    error_msg = {}
+    if not results:
+        error_msg = "Invalid Input"
+    return render(request, 'search/search.html', {'results': results,'error':error_msg,'query':query})

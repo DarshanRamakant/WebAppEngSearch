@@ -6,12 +6,18 @@
         <button type="submit">Search</button>
     </form>
 
-    {% if results %}
-    <ul>
-        <p>You may get "{{results.name}}" college and "{{results.branch}}" branch</p>
-    </ul>
-    {% else %}
-        <p>Invalid Input.</p>
+    {% if query %}
+        {% if results %}
+        <div style="text-align: center;">
+            <p style="font-size: 20px;"><strong>You may get "{{results.name}}" college and "{{results.branch}}" branch</strong></p>
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div style="text-align: center;">
+            <p style="font-size: 20px;">{{error}}</p>
+        </div>
+        {% endif %}
     {% endif %}
 
 {% endblock %}
