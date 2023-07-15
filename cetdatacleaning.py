@@ -72,9 +72,13 @@ for lis in delimited:
     elif len(lis)>15:
       if is_number(lis[16]):
         branchname = buffer + lis[0]
+        if branchname[0]=='\"':
+          fbranchname = branchname[1:3] 
+        else:
+          fbranchname = branchname[:2]
         buffer = ""
         gmcutoff = lis[16]
-        d[branchname] = gmcutoff
+        d[fbranchname] = gmcutoff
 
 
 
